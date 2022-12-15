@@ -139,3 +139,39 @@ void dijkstra(vector<vector<int>> adjMatrix, int start)
         cout << dist[i] << " ";
     }
 }
+
+
+// Find the path from a source to a destination using BFS
+void findPath(vector<vector<int>> adjMatrix, int source, int destination) {
+	int numberOfVertex = adjMatrix.size();
+	bool* visited = new bool[numberOfVertex]();
+	int* path = new int[numberOfVertex];
+	for (int i = 0; i < numberOfVertex; i++) {
+		visited[i] = false;
+	}
+	queue<int> q;
+	q.push(source);
+	visited[source] = true;
+	while (!q.empty()) {
+		int u = q.front();
+		q.pop();
+		for (int v = 0; v < numberOfVertex; v++) {
+			if (adjMatrix[u][v] != -INFINITY && !visited[v]) {
+				q.push(v);
+				visited[v] = true;
+				path[v] = u;
+			}
+		}
+	}
+	if (visited[destination] == true) {
+		int current = destination;
+		while (current != source) {
+			cout << current << " ";
+			current = path[current];
+		}
+		cout << source << endl;
+	}
+	else {
+		cout << "No path from " << source << " to " << destination << endl;
+	}
+}
